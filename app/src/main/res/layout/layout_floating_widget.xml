@@ -44,55 +44,63 @@
             android:id="@+id/expanded_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="8dp"
             android:visibility="gone">
+        <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/option_1"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/widget_crop" />
 
             <ImageView
                 android:id="@+id/floating_widget_image_view"
+                android:layout_marginBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher" />
 
+            <ImageView
+                android:id="@+id/option_4"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/widget_free_crop" />
+        </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp">
 
-                <TextView
-                    android:id="@+id/floating_widget_title_label"
+                <ImageView
+                    android:id="@+id/option_2"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="string/floating_widget_label"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:src="@drawable/widget_screenshot" />
 
-                <TextView
-                    android:id="@+id/floating_widget_detail_label"
+
+
+                <ImageView
+                    android:id="@+id/option_3"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="string/floating_widget_details"
-                    android:textColor="@color/darker_gray"
-                    android:textSize="11sp" />
+                    android:src="@drawable/widget_scroll" />
             </LinearLayout>
 
-            <!--  ImageView to Close Expanded View  -->
-            <ImageView
-                android:id="@+id/close_expanded_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:src="@drawable/ic_close_black_24dp" />
-
-            <!--  ImageView to Open Activity  -->
             <ImageView
                 android:id="@+id/open_activity_button"
+                android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

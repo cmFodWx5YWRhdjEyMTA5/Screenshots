@@ -17,16 +17,18 @@ package com.example.sid.screenshots;
         import android.view.View;
         import android.view.WindowManager;
         import android.view.animation.Animation;
+        import android.view.animation.AnimationUtils;
         import android.view.animation.TranslateAnimation;
         import android.widget.ImageView;
 
 
-class FloatWidgetService extends Service implements View.OnClickListener {
+class FloatWidgetService extends Service implements View.OnClickListener, Animation.AnimationListener {
     private WindowManager mWindowManager;
     private View mFloatingWidgetView, collapsedView, expandedView;
-    private ImageView remove_image_view;
+    private ImageView remove_image_view, option1, option2, option3, option4;
     private Point szWindow = new Point();
     private View removeFloatingWidgetView;
+    private Animation animRotate;
 
     private int x_init_cord, y_init_cord, x_init_margin, y_init_margin;
 
@@ -59,6 +61,8 @@ class FloatWidgetService extends Service implements View.OnClickListener {
         addFloatingWidgetView(inflater);
         implementClickListeners();
         implementTouchListenerToFloatingWidgetView();
+        animRotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
+        animRotate.setAnimationListener(this);
     }
 
 
@@ -115,6 +119,12 @@ class FloatWidgetService extends Service implements View.OnClickListener {
 
         //find id of the expanded view layout
         expandedView = mFloatingWidgetView.findViewById(R.id.expanded_container);
+        //id of options
+        option1 = (ImageView)mFloatingWidgetView.findViewById(R.id.option_1);
+        option2 = (ImageView)mFloatingWidgetView.findViewById(R.id.option_2);
+        option3 = (ImageView)mFloatingWidgetView.findViewById(R.id.option_3);
+        option4 = (ImageView)mFloatingWidgetView.findViewById(R.id.option_4);
+
     }
 
     private void getWindowManagerDefaultDisplay() {
@@ -292,8 +302,18 @@ class FloatWidgetService extends Service implements View.OnClickListener {
 
     private void implementClickListeners() {
         mFloatingWidgetView.findViewById(R.id.close_floating_view).setOnClickListener(this);
-        mFloatingWidgetView.findViewById(R.id.close_expanded_view).setOnClickListener(this);
         mFloatingWidgetView.findViewById(R.id.open_activity_button).setOnClickListener(this);
+        mFloatingWidgetView.findViewById(R.id.floating_widget_image_view).setOnClickListener(this);
+        //crop
+        mFloatingWidgetView.findViewById(R.id.option_1).setOnClickListener(this);
+        //screenshot
+        mFloatingWidgetView.findViewById(R.id.option_2).setOnClickListener(this);
+        //scroll
+        mFloatingWidgetView.findViewById(R.id.option_3).setOnClickListener(this);
+        //free hand 
+        mFloatingWidgetView.findViewById(R.id.option_4).setOnClickListener(this);
+
+
     }
 
 
@@ -304,27 +324,70 @@ class FloatWidgetService extends Service implements View.OnClickListener {
                 //close the service and remove the from from the window
                 stopSelf();
                 break;
-            case R.id.close_expanded_view:
-                collapsedView.setVisibility(View.VISIBLE);
-                expandedView.setVisibility(View.GONE);
+
+            case R.id.option_1:
+                //open the activity and stop service
+                Intent intent1 = new Intent(FloatWidgetService.this, MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent1);
+                //close the service and remove view from the view hierarchy
+                stopSelf();
                 break;
+
+            case R.id.option_2:
+                //open the activity and stop service
+                Intent intent2 = new Intent(FloatWidgetService.this, MainActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+                //close the service and remove view from the view hierarchy
+                stopSelf();
+                break;
+
+            case R.id.option_3:
+                //open the activity and stop service
+                Intent intent3 = new Intent(FloatWidgetService.this, MainActivity.class);
+                intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent3);
+                //close the service and remove view from the view hierarchy
+                stopSelf();
+                break;
+
+            case R.id.option_4:
+                //open the activity and stop service
+                Intent intent4 = new Intent(FloatWidgetService.this, MainActivity.class);
+                intent4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent4);
+                //close the service and remove view from the view hierarchy
+                stopSelf();
+                break;
+
+            case R.id.floating_widget_image_view:
+                //open the activity and stop service
+                expandedView.setVisibility(View.GONE);
+                collapsedView.setVisibility(View.VISIBLE);
+                option1.setAnimation(animRotate);
+                option2.setAnimation(animRotate);
+                option3.setAnimation(animRotate);
+                option4.setAnimation(animRotate);
+
+                //close the service and remove view from the view hierarchy
+                break;
+
             case R.id.open_activity_button:
                 //open the activity and stop service
                 Intent intent = new Intent(FloatWidgetService.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
                 //close the service and remove view from the view hierarchy
                 stopSelf();
                 break;
+
         }
     }
 
     /*  on Floating Widget Long Click, increase the size of remove view as it look like taking focus */
     private void onFloatingWidgetLongClick() {
         //Get remove Floating view params
-        collapsedView.setVisibility(View.VISIBLE);
-        expandedView.setVisibility((View.GONE));
         WindowManager.LayoutParams removeParams = (WindowManager.LayoutParams) removeFloatingWidgetView.getLayoutParams();
 
         //get x and y coordinates of remove view
@@ -332,6 +395,8 @@ class FloatWidgetService extends Service implements View.OnClickListener {
         int y_cord = szWindow.y - (removeFloatingWidgetView.getHeight() + getStatusBarHeight());
 
 
+        collapsedView.setVisibility(View.VISIBLE);
+        expandedView.setVisibility(View.GONE);
         removeParams.x = x_cord;
         removeParams.y = y_cord;
 
@@ -487,4 +552,18 @@ class FloatWidgetService extends Service implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }
